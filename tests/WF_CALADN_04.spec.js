@@ -1,0 +1,90 @@
+import { test, expect } from "../fixtures/baseTest.js";
+
+const { StepHelper } = require('../utils/StepHelper');
+
+test.setTimeout(120000);
+
+const { PatientPage } = require('../pages/PatientPage');
+const { ConsultPage } = require('../pages/ConsultPage');
+const { ServicePage } = require('../pages/ServicePage');
+const { InvoicePage } = require('../pages/InvoicePage');
+const { PaymentPage } = require('../pages/PaymentPage');
+const { CalendarPage } = require('../pages/CalendarPage');
+
+const { patientData } = require('../testdata/patients');
+const { paymentData } = require('../testdata/payments');
+const { appoinmentData }= require('../testdata/appointmentData');
+const { consultData, bookingData } = require('../testdata/consultData');
+const { serviceData, DateData } = require('../testdata/serviceData');
+const { invoiceData } = require('../testdata/invoiceData');
+
+const { generatePatientName } = require('../utils/RandomData');
+
+test('Make Payment', async ({ page }) => {
+
+    const patientName = generatePatientName();
+    const patientPage = new PatientPage(page);
+    const consultPage = new ConsultPage(page);
+    const servicePage = new ServicePage(page);
+    const invoicePage = new InvoicePage(page);
+    const paymentPage = new PaymentPage(page);
+    const calendarPage = new CalendarPage(page);
+
+    await patientPage.createPatient(
+        patientName,
+        patientData
+    );
+
+    await consultPage.addConsult(
+        patientName,
+        appoinmentData.doctorName,
+        consultData.consultSlot,
+        bookingData.bookingDate
+    );
+
+    await servicePage.addService(
+    patientName,
+    serviceData.serviceName,
+    DateData.bookingDate
+    );
+
+    await calendarPage.selectPatientFromCalendar(
+    patientName,
+    bookingData.bookingDate
+    );
+
+    await invoicePage.generateInvoice(
+    patientName,
+    invoiceData
+    ); 
+
+    const summaryAmount =
+    await invoicePage.verifyInvoiceTotalAfterAdjustment(
+        invoiceData
+    );
+
+    await invoicePage.verifyPaymentSection();
+
+    await invoicePage.openAndVerifyInvoicePDF(
+        patientName,
+        patientData,
+        invoiceData,
+        summaryAmount
+    );
+
+     await paymentPage.openFinancials(
+        patientName
+    );
+
+
+    await paymentPage.makePayment(
+    paymentData.paymentMethod,
+    paymentData.amount,
+    paymentData.transactionId
+    );
+    
+    await paymentPage.verifyPayment(
+    paymentData.amount
+    );
+
+});

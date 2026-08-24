@@ -1,0 +1,34 @@
+{
+  "consultData": {
+    "consultSlot": "First Consult"
+  },
+
+  "bookingData": {
+    "bookingDate": "29"
+  },
+
+  "consultBookingData": {
+    "patientName": "Patient Temp Z",
+    "appointmentType": "Consult",
+    "doctorName": "Dr. Orthopedic",
+    "consultType": "First Consult",
+    "followUpConsultType": "Follow-up consult",
+    "datePreset": "Tomorrow",
+    "bookingDateOffsetInDays": 3
+},
+
+  "expectedAppointmentTypes": [
+    "Consult",
+    "Test",
+    "Consumable",
+    "Service",
+    "DayCare",
+    "Packages"
+  ],
+
+  "bookingTimeouts": {
+    "searchDebounce": 1500,
+    "filterRefresh": 2000
+  }
+  
+}
