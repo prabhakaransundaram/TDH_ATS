@@ -25,7 +25,7 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: Run WF_CALADN_03 test
-        run: npx playwright test WF_CALADN_03.spec.js --project=chromium --workers=1
+      - name: Run WF_CALADN_05 test
+        run: npx playwright test WF_CALADN_05.spec.js --project=chromium --workers=1
 
       
