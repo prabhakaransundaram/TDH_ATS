@@ -300,6 +300,108 @@ class CancellationPage {
         );
     }
 
+   async cancelPackageWithFullRefund() {
+
+    await this.clickCancel();
+
+   await StepHelper.step(
+    this.page,
+    'Select Whole Package',
+    async () => {
+        await this.keywords.click(
+            this.locator.wholePackageBtn
+        );
+    }
+);
+
+await StepHelper.step(
+    this.page,
+    'Verify Package Cancellation Services Screen',
+    async () => {
+        await expect(
+            this.page.getByText('Services will be cancelled', {
+                exact: false
+            })
+        ).toBeVisible({ timeout: 10000 });
+    }
+);
+
+await StepHelper.step(
+    this.page,
+    'Continue Package Cancellation',
+    async () => {
+        await this.keywords.click(
+            this.locator.continueBtn
+        );
+    }
+);
+
+// Now reason selection
+await this.selectReason();
+
+    await StepHelper.step(
+        this.page,
+        'Continue Cancellation',
+        async () => {
+            await this.keywords.click(
+                this.locator.continueCancellationBtn
+            );
+        }
+    );
+
+    await StepHelper.step(
+        this.page,
+        'Select Refund Option',
+        async () => {
+            await this.keywords.click(
+                this.locator.refundBtn
+            );
+        }
+    );
+
+    await StepHelper.step(
+        this.page,
+        'Select Make Full Refund',
+        async () => {
+            await this.keywords.click(
+                this.locator.fullRefundCheckbox
+            );
+        }
+    );
+
+    await StepHelper.step(
+        this.page,
+        'Review And Confirm Full Refund',
+        async () => {
+            await this.keywords.click(
+                this.locator.reviewConfirmBtn
+            );
+        }
+    );
+
+    await StepHelper.step(
+        this.page,
+        'Confirm Cancellation',
+        async () => {
+            await this.keywords.click(
+                this.locator.confirmCancellationBtn
+            );
+        }
+    );
+
+    await StepHelper.step(
+    this.page,
+    'Verify Package Cancelled',
+    async () => {
+        await expect(
+            this.locator.cancelledStatus
+        ).toContainText(
+            cancellationData.expectedStatus
+        );
+    }
+);
+
+}
 
     async selectPaymentMode(
         paymentType,

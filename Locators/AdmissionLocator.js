@@ -106,9 +106,17 @@ this.otOption = (otName) =>
         return this.admissionDateComponent.locator('button').filter({ hasText: /^Save$/ });
     }
 
+    // getDayLocator(day) {
+    //     return this.page.locator('div.calendar-day')
+    //         .filter({ hasText: new RegExp(`^\\s*${day}\\s*$`) });
+    // }
+
     getDayLocator(day) {
-        return this.page.locator('div.calendar-day')
-            .filter({ hasText: new RegExp(`^\\s*${day}\\s*$`) });
+    return this.page
+        .locator('div.calendar-day:not(.greyed-out-day)')
+        .filter({
+            hasText: new RegExp(`^\\s*${day}\\s*$`)
+        });
     }
 
     get admissionTimeComponent() {

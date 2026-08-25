@@ -1,5 +1,6 @@
 {
   "cancellationData": {
-    "cancellationReason": "Emergency or unexpected issue"
+    "cancellationReason": "Emergency or unexpected issue",
+     "expectedStatus": "Cancelled"
   }
 }

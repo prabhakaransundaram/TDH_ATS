@@ -94,6 +94,48 @@ class CancellationLocator {
         this.cancelledStatus = page.locator(
             ".status-style.status-cancelled"
         ).first();
+
+        // Package Cancellation
+this.wholePackageBtn = page.getByRole('button', {
+    name: 'Whole Package',
+    exact: true
+});
+
+// this.continueBtn = page.getByRole('button', {
+//     name: 'Continue',
+//     exact: true
+// });
+
+this.continueBtn = page.locator('button').filter({
+    hasText: /^Continue$/
+});
+
+this.continueCancellationBtn = page.getByRole('button', {
+    name: 'Continue Cancellation',
+    exact: true
+});
+
+// Full Refund
+this.fullRefundCheckbox = page.getByText(
+    'Make full refund',
+    { exact: true }
+);
+
+this.reviewConfirmBtn = page.getByRole('button', {
+    name: 'Review & Confirm',
+    exact: true
+});
+
+this.confirmCancellationBtn = page.getByRole('button', {
+    name: 'Confirm Cancellation',
+    exact: true
+});
+
+this.continueCancellationBtn =
+    page.getByRole('button', {
+        name: 'Continue Cancellation',
+        exact: true
+    });
     }
 
     getCancellationReason(reason) {

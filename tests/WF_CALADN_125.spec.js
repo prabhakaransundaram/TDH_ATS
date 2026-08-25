@@ -20,6 +20,7 @@ const { consultData, bookingData } = require('../testdata/consultData.json');
 const { serviceData, DateData } = require('../testdata/serviceData.json');
 const { invoiceData } = require('../testdata/invoiceData.json');
 const { packageData,statusData } = require('../testdata/packageData.json');
+const { cancellationData } = require('../testdata/CancellationData.json');
 
 const { generatePatientName } = require('../utils/RandomData');
 
@@ -84,10 +85,12 @@ test('Package - Cancel with Full Refund', async ({ page }) => {
         paymentData.amount
     );
 
+    await cancellationPage.cancelPackageWithFullRefund();
+
 //    await cancellationPage.cancelWithRefund(
-//         paymentData.paymentMethod,
-//         paymentData.amount,
-//         paymentData.transactionId
-//     );
+//     paymentData.paymentMethod,
+//     paymentData.amount,
+//     paymentData.transactionId
+    // );
 
 });

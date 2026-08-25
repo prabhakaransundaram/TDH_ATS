@@ -1115,32 +1115,132 @@ async verifyPaymentSection() {
                 }
             );
 
-            // ==========================================
-            // Discount
-            // ==========================================
+            // // ==========================================
+            // // Discount
+            // // ==========================================
 
-            const expectedDiscount =
-                `Discount : ${discount.toFixed(2)}`;
+            // const expectedDiscount =
+            //     `Discount : ${discount.toFixed(2)}`;
 
-            const actualDiscount =
-                (
-                    await this.keywords.getText(
-                        this.locator.discountPdf(
-                            discount
-                        )
-                    )
-                ).trim();
+            // const actualDiscount =
+            //     (
+            //         await this.keywords.getText(
+            //             this.locator.discountPdf(
+            //                 discount
+            //             )
+            //         )
+            //     ).trim();
 
-            await StepHelper.step(
-                this.page,
-                `Verify Discount | Expected: ${expectedDiscount} | Actual: ${actualDiscount}`,
-                async () => {
+            // await StepHelper.step(
+            //     this.page,
+            //     `Verify Discount | Expected: ${expectedDiscount} | Actual: ${actualDiscount}`,
+            //     async () => {
 
-                    expect(actualDiscount).toBe(
-                        expectedDiscount
-                    );
-                }
+            //         expect(actualDiscount).toBe(
+            //             expectedDiscount
+            //         );
+            //     }
+            // );
+
+            // // ==========================================
+            // // Adjustment
+            // // ==========================================
+
+            // const expectedAdjustment =
+            //     `Adjustment : ${discount.toFixed(2)}`;
+
+            // const actualAdjustment =
+            //     (
+            //         await this.keywords.getText(
+            //             this.locator.adjustmentPdf(
+            //                 discount
+            //             )
+            //         )
+            //     ).trim();
+
+            // await StepHelper.step(
+            //     this.page,
+            //     `Verify Adjustment | Expected: ${expectedAdjustment} | Actual: ${actualAdjustment}`,
+            //     async () => {
+
+            //         expect(actualAdjustment).toBe(
+            //             expectedAdjustment
+            //         );
+            //     }
+            // );
+
+// ==========================================
+// Discount / Adjustment
+// ==========================================
+
+const expectedDiscount =
+    `Discount : ${discount.toFixed(2)}`;
+
+const expectedAdjustment =
+    `Adjustment : ${discount.toFixed(2)}`;
+
+const discountLocator =
+    this.locator.discountPdf(discount);
+
+const adjustmentLocator =
+    this.locator.adjustmentPdf(discount);
+
+let actualDiscount = '';
+let actualAdjustment = '';
+
+const discountCount =
+    await discountLocator.count();
+
+const adjustmentCount =
+    await adjustmentLocator.count();
+
+if (discountCount > 0) {
+
+    actualDiscount =
+        (
+            await this.keywords.getText(
+                discountLocator
+            )
+        ).trim();
+
+    await StepHelper.step(
+        this.page,
+        `Verify Discount | Expected: ${expectedDiscount} | Actual: ${actualDiscount}`,
+        async () => {
+
+            expect(actualDiscount).toBe(
+                expectedDiscount
             );
+        }
+    );
+
+} else if (adjustmentCount > 0) {
+
+    actualAdjustment =
+        (
+            await this.keywords.getText(
+                adjustmentLocator
+            )
+        ).trim();
+
+    await StepHelper.step(
+        this.page,
+        `Verify Adjustment | Expected: ${expectedAdjustment} | Actual: ${actualAdjustment}`,
+        async () => {
+
+            expect(actualAdjustment).toBe(
+                expectedAdjustment
+            );
+        }
+    );
+
+} else {
+
+    throw new Error(
+        `Neither Discount nor Adjustment was found in Invoice PDF. ` +
+        `Expected either "${expectedDiscount}" or "${expectedAdjustment}".`
+    );
+}
 
             // ==========================================
             // Total

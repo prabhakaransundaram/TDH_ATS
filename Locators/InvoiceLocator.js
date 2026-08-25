@@ -171,16 +171,21 @@ class InvoiceLocator {
             `Sub Total : ${parseFloat(subTotal).toFixed(2)}`
         );
 
-    // this.discountPdf = (discount) =>
-    //     this.pdfBody.getByText(
-    //         `Discount : ${parseFloat(discount).toFixed(2)}`
-    //     );
-
     this.discountPdf = (discount) =>
-    page.getByText(
-        `Discount : ${discount.toFixed(2)}`,
-        { exact: true }
-    ).first();
+        this.pdfBody.getByText(
+            `Discount : ${parseFloat(discount).toFixed(2)}`
+        );
+
+    this.adjustmentPdf = (adjustment) =>
+    this.pdfBody.getByText(
+        `Adjustment : ${parseFloat(adjustment).toFixed(2)}`
+    );
+
+    // this.discountPdf = (discount) =>
+    // this.pdfBody.getByText(
+    //     new RegExp(`Discount\\s*:\\s*${parseFloat(discount).toFixed(2)}`)
+    // );
+
 
     this.totalPdf = (total) =>
         this.pdfBody.getByText(

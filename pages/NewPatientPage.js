@@ -520,15 +520,37 @@ export class NewPatient {
     }
 
 
+    // async verifyPatientSaved(patientName) {
+
+    //     await Verify.state(
+    //         this.page,
+    //         `Patient Saved Confirmation - ${patientName}`,
+    //         this.locator.patientSavedMsg,
+    //         { visible: true, soft: false }
+    //     );
+    // }
+
     async verifyPatientSaved(patientName) {
 
-        await Verify.state(
-            this.page,
-            `Patient Saved Confirmation - ${patientName}`,
-            this.locator.patientSavedMsg,
-            { visible: true, soft: false }
-        );
-    }
+    await this.keywords.waitForElement(
+        this.locator.patientSavedToastTitle,
+        15000
+    );
+
+    await Verify.state(
+        this.page,
+        `Patient Saved Confirmation - ${patientName}`,
+        this.locator.patientSavedToastTitle,
+        { visible: true, soft: false }
+    );
+
+    await Verify.text(
+        this.page,
+        'Patient Saved Toast Title Text',
+        'Patient Saved successfully',
+        this.locator.patientSavedToastTitle
+    );
+}
 
 
     async searchAndVerifyPatient(patientName) {
