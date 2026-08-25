@@ -32,16 +32,23 @@ export default defineConfig({
   //       }
   //   ]
   // ],
-  reporter: [
-  ['html', {
-    outputFolder: 'playwright-report',
-    open: 'never'
-  }],
-  ['allure-playwright', {
-    outputFolder: 'allure-results',
-    detail: false,
-    suiteTitle: true
-  }]
+//   reporter: [
+//   ['html', {
+//     outputFolder: 'playwright-report',
+//     open: 'never'
+//   }],
+//   ['allure-playwright', {
+//     outputFolder: 'allure-results',
+//     detail: false,
+//     suiteTitle: true
+//   }]
+// ],
+
+reporter: [
+    ['html', {
+        outputFolder: 'playwright-report',
+        open: 'never'
+    }]
 ],
   // /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
