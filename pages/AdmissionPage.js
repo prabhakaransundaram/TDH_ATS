@@ -785,6 +785,12 @@ export class AdmissionPage {
         const dateValue = this.locator.getSummaryValueByLabel('Admission Date');
         const timeValue = this.locator.getSummaryValueByLabel('Appointment Start Time');
 
+        await dateValue.waitFor({
+            state: 'visible',
+            timeout: 30000
+        });
+
+
         await Verify.state(
             this.page,
             'Admission Date Summary Value',
